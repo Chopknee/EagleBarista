@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/Coffee_Making_Challenge.unity
+  isLoaded: 1
+  isActive: 1
