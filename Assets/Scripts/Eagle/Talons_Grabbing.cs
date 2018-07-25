@@ -27,13 +27,12 @@ public class Talons_Grabbing : MonoBehaviour {
     private void OnTriggerStay2D(Collider2D collision) {
         
         if (Input.GetButton("Fire1") && !grabbed) {
-            Debug.Log("TRIGGERED!");
-            grabbed = true;
-            grabbedObject  = collision.gameObject;
-            grabbedObject.GetComponent<Rigidbody2D>().isKinematic = true;
-            grabbedObject.transform.parent = gameObject.transform;
+            grabbedObject = collision.gameObject;
+            if (grabbedObject.GetComponent<Rigidbody2D>() != null) {
+                grabbed = true;
+                grabbedObject.GetComponent<Rigidbody2D>().isKinematic = true;
+                grabbedObject.transform.parent = gameObject.transform;
+            }
         }
-
-
     }
 }

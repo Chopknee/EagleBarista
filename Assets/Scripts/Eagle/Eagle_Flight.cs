@@ -34,9 +34,13 @@ public class Eagle_Flight : MonoBehaviour {
         {
             direction += new Vector2(0, 70);
         }
-        //Debug.Log(direction);
+
         direction = direction * speed;
         gameObject.GetComponent<Rigidbody2D>().AddForce(direction);
-        //transform.position = new Vector3(transform.position.x + direction.x, transform.position.y + direction.y, transform.position.z);
+
+        float angle = 180-transform.rotation.eulerAngles.z;
+
+        float anglularAccel = angle / Mathf.Abs(angle);
+        gameObject.GetComponent<Rigidbody2D>().AddTorque(-anglularAccel);
     }
 }
