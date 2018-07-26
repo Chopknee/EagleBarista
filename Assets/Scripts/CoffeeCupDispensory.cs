@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CoffeeCupDispensory : MonoBehaviour {
 
-    public CupTrigger trig;
+    public ObjectsTrigger trig;
     public GameObject cupPrefab;
     public Vector2 cupSpawnOffset;
 
@@ -15,7 +15,7 @@ public class CoffeeCupDispensory : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (trig.insertedObject == null) {
+        if (trig.entangledGameObjects.Count == 0) {
             GameObject go = Instantiate(cupPrefab);
             Vector2 pos = transform.position;
             go.transform.position = pos + cupSpawnOffset;

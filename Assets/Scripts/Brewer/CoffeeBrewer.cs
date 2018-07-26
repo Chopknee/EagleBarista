@@ -5,8 +5,8 @@ using UnityEngine;
 public class CoffeeBrewer : MonoBehaviour {
 
     public InteractableButton buttonScript;
-    public CupTrigger cupInsertedTrigger;
-    public CupTrigger puckInsertedTrigger;
+    public ObjectsTrigger cupInsertedTrigger;
+    public ObjectsTrigger puckInsertedTrigger;
 
     public bool brewing = false;
 
@@ -29,12 +29,12 @@ public class CoffeeBrewer : MonoBehaviour {
 
         //The cup is not inserted.
 
-        if (puckInsertedTrigger.insertedObject == null) {
+        if (puckInsertedTrigger.entangledGameObjects.Count == 0) {
             GetComponentInChildren<ParticleSystem>().startColor = new Color(0, 0, 1);
         } else {
             coffee = true;
             GetComponentInChildren<ParticleSystem>().startColor = new Color(0.168f, 0.152f, 0.102f);
-            Destroy(puckInsertedTrigger.insertedObject);
+            puckInsertedTrigger.DestroyEnangledObjects();
         }
 
         //if (cupInsertedTrigger.insertedObject != null) {
@@ -55,9 +55,10 @@ public class CoffeeBrewer : MonoBehaviour {
 
     void AddFluid()
     {
-        if (cupInsertedTrigger.insertedObject != null)
+        if (cupInsertedTrigger.entangledGameObjects.Count != 0)
         {
-            GameObject cup = cupInsertedTrigger.insertedObject;
+            //Check if the gameobject has a liquid storage script
+            GameObject cup = cupInsertedTrigger.entangledGameObjects[0];
             if (cup.GetComponent<LiquidStorage>() != null)
             {
                 if (coffee)
