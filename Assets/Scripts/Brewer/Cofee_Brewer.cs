@@ -9,16 +9,16 @@ public class Cofee_Brewer : MonoBehaviour {
     public CupTrigger puckInsertedTrigger;
 
     public bool brewing = false;
-	
+
+    public bool coffee = false;
+
+    public float fluidPerSecond = 0.05f;
+
 	void Start () {
         if (buttonScript != null) {
             buttonScript.OnClicked += OnBrewButtonClicked;
+            buttonScript.OnReleased += OnBrewButtonReleased;
         }
-	}
-	
-	
-	void Update () {
-        
 	}
 
     void OnBrewButtonClicked() {
@@ -29,7 +29,6 @@ public class Cofee_Brewer : MonoBehaviour {
 
         //The cup is not inserted.
 
-        bool coffee = false;
         if (puckInsertedTrigger.insertedObject == null) {
             GetComponentInChildren<ParticleSystem>().startColor = new Color(0, 0, 1);
         } else {
@@ -38,24 +37,50 @@ public class Cofee_Brewer : MonoBehaviour {
             Destroy(puckInsertedTrigger.insertedObject);
         }
 
-        if (cupInsertedTrigger.insertedObject != null) {
+        //if (cupInsertedTrigger.insertedObject != null) {
+        //    GameObject cup = cupInsertedTrigger.insertedObject;
+        //    if (cup.GetComponent<LiquidStorage>() != null) {
+        //        if (coffee) {
+        //            cup.GetComponent<Vessel>().AddFluid("Coffee", new Fluid("Coffee", 1, 1));
+        //        } else {
+        //            cup.GetComponent<Vessel>().AddFluid("Water", new Fluid("Water", 1, 1));
+        //        }
+        //    }
+        //}
+
+        GetComponentInChildren<ParticleSystem>().Play();
+        brewing = true;
+        Invoke("AddFluid", 0.2f);
+    }
+
+    void AddFluid()
+    {
+        if (cupInsertedTrigger.insertedObject != null)
+        {
             GameObject cup = cupInsertedTrigger.insertedObject;
-            if (cup.GetComponent<LiquidStorage>() != null) {
-                if (coffee) {
-                    cup.GetComponent<LiquidStorage>().AddFluid("Cofee", 1);
-                } else {
-                    cup.GetComponent<LiquidStorage>().AddFluid("Water", 1);
+            if (cup.GetComponent<LiquidStorage>() != null)
+            {
+                if (coffee)
+                {
+                    cup.GetComponent<LiquidStorage>().v.AddFluid("Coffee", new Fluid("Coffee", 1, fluidPerSecond));
+                }
+                else
+                {
+                    cup.GetComponent<LiquidStorage>().v.AddFluid("Water", new Fluid("Water", 1, fluidPerSecond));
                 }
             }
         }
 
-        GetComponentInChildren<ParticleSystem>().Play();
-        Invoke("StopBrewing", 5);
-        brewing = true;
+        if (brewing)
+        {
+            Invoke("AddFluid", 0.2f);
+        }
     }
 
-    void StopBrewing() {
+    void OnBrewButtonReleased()
+    {
         GetComponentInChildren<ParticleSystem>().Stop();
         brewing = false;
+        coffee = false;
     }
 }

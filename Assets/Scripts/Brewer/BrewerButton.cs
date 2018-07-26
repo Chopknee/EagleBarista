@@ -10,11 +10,14 @@ public class BrewerButton : MonoBehaviour {
     public delegate void ClickedEvent();
     public ClickedEvent OnClicked;
 
+    public delegate void ReleasedEvent();
+    public ReleasedEvent OnReleased;
+
     bool down = false;
 
     private void OnTriggerStay2D(Collider2D collision) {
         //The eagle is inside, is it trying to click?
-        if (Input.GetButton("Fire1") && !down) {
+        if (Input.GetButtonDown("Fire1") && !down) {
             down = true;
             litButton.SetActive(false);
             dimButton.SetActive(true);
@@ -24,6 +27,7 @@ public class BrewerButton : MonoBehaviour {
             down = false;
             litButton.SetActive(true);
             dimButton.SetActive(false);
+            OnReleased();
         }
     }
 
@@ -31,5 +35,6 @@ public class BrewerButton : MonoBehaviour {
         down = false;
         litButton.SetActive(true);
         dimButton.SetActive(false);
+        OnReleased();
     }
 }
