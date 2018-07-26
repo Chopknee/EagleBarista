@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrewerButton : MonoBehaviour {
+public class InteractableButton : MonoBehaviour {
 
     public GameObject litButton;
     public GameObject dimButton;

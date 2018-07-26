@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cofee_Brewer : MonoBehaviour {
+public class CoffeeBrewer : MonoBehaviour {
 
-    public BrewerButton buttonScript;
+    public InteractableButton buttonScript;
     public CupTrigger cupInsertedTrigger;
     public CupTrigger puckInsertedTrigger;
 
@@ -62,11 +62,11 @@ public class Cofee_Brewer : MonoBehaviour {
             {
                 if (coffee)
                 {
-                    cup.GetComponent<LiquidStorage>().v.AddFluid("Coffee", new Fluid("Coffee", 1, fluidPerSecond));
+                    cup.GetComponent<LiquidStorage>().v.AddFluid("Coffee", new Fluid("Coffee", 1, fluidPerSecond, new Color(0.168f, 0.152f, 0.102f)));
                 }
                 else
                 {
-                    cup.GetComponent<LiquidStorage>().v.AddFluid("Water", new Fluid("Water", 1, fluidPerSecond));
+                    cup.GetComponent<LiquidStorage>().v.AddFluid("Water", new Fluid("Water", 1, fluidPerSecond, new Color(0, 0, 1)));
                 }
             }
         }
