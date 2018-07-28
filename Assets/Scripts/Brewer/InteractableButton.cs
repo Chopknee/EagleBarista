@@ -32,9 +32,11 @@ public class InteractableButton : MonoBehaviour {
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        down = false;
-        litButton.SetActive(true);
-        dimButton.SetActive(false);
-        OnReleased();
+        if (down) {
+            down = false;
+            litButton.SetActive(true);
+            dimButton.SetActive(false);
+            OnReleased();
+        }
     }
 }

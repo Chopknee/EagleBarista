@@ -30,13 +30,29 @@ public class Vessel {
         if (totalLiquidContents >= 1) {
             Dictionary<string, Fluid> temp = new Dictionary<string, Fluid>(liquidContents);
             float overage = totalLiquidContents - 1;
-            Debug.Log("Overflow by " + overage + " liquid units.");
             foreach (KeyValuePair<string, Fluid> liq in temp) {
                 liquidContents[liq.Key].volume = liq.Value.volume - ((liq.Value.volume / totalLiquidContents) * overage);
+                //Remove the fluid if no volume is left.
+                if (liquidContents[liq.Key].volume <= 0) {
+                    liquidContents.Remove(liq.Key);
+                }
             }
         }
+    }
 
-        Debug.Log(liquidName + " has been added!");
+    //Replaces the specified fluid with the fluid given
+    public void ReplaceFluid(string liquidName, Fluid fluid, string fluidToReplace) {
+        if (liquidContents.ContainsKey(fluidToReplace)) {
+            liquidContents[fluidToReplace].volume -= fluid.volume;
+            float replaceAmount = liquidContents[fluidToReplace].volume;
+            if (replaceAmount <= 0) {
+                //Take this much away from the new fluid
+                //replace amount should be negative at this point.
+                fluid.volume += replaceAmount;//This should be negative
+                liquidContents.Remove(fluidToReplace);//Get rid of the reference.
+            }
+            AddFluid(liquidName, fluid);
+        }
     }
 
     public float GetLiquidContentsTotal() {

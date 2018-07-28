@@ -33,9 +33,10 @@ public class ObjectsTrigger : MonoBehaviour {
     }
 
     public void DestroyEnangledObjects() {
-        foreach (GameObject g in entangledGameObjects) {
-            Destroy(g);
+        for (int i = entangledGameObjects.Count-1; i >= 0; i --) {
+            Destroy(entangledGameObjects[i]);
         }
+        
         entangledGameObjects.Clear();
     }
 }

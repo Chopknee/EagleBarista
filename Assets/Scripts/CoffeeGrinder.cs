@@ -31,6 +31,7 @@ public class CoffeeGrinder : MonoBehaviour {
         if (!isGrinding && !isClicked) {
             isGrinding = true;
             isClicked = true;
+            GetComponentInChildren<ParticleSystem>().Play();
             Invoke("Dispense", grindTime);
         }
     }
@@ -44,6 +45,7 @@ public class CoffeeGrinder : MonoBehaviour {
         Vector2 pos = transform.position;
         go.transform.position = pos + groundCoffeePosition;
         isGrinding = false;
+        GetComponentInChildren<ParticleSystem>().Stop();
     }
 
     public void OnDrawGizmos() {

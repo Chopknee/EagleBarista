@@ -35,10 +35,17 @@ public class Eagle_Flight : MonoBehaviour {
             direction += new Vector2(0, 70);
         }
 
+        float rotation = 0;
+
+        if (Input.GetAxis("RotateEagle") != 0) {
+            rotation = Input.GetAxis("RotateEagle")*180;
+        }
+
         direction = direction * speed;
         gameObject.GetComponent<Rigidbody2D>().AddForce(direction);
 
-        float angle = 180-transform.rotation.eulerAngles.z;
+        //Keeping rotation
+        float angle = 180-transform.rotation.eulerAngles.z + rotation;
 
         float anglularAccel = angle / Mathf.Abs(angle);
         gameObject.GetComponent<Rigidbody2D>().AddTorque(-anglularAccel);
